@@ -208,3 +208,60 @@ pub mod find_median_sorted_arrays {
         }
     }
 }
+pub mod longest_palindrome {
+    //给你一个字符串 s，找到 s 中最长的回文子串。
+    pub struct Solution;
+    impl Solution {
+        pub fn longest_palindrome(s: String) -> String {
+            let ss = Solution::add_space(s);
+            let s: Vec<char> = ss.chars().collect();
+            let mut result = "".to_string();
+
+            for i in 0..s.len() {
+                let mut r = 0;
+                while i >= r && i + r < s.len() {
+                    if s[i - r] == s[i + r] {
+                        let tmp = ss[i - r..i + r + 1].to_string().replace(" ", "");
+                        if tmp.len() > result.len() {
+                            result = tmp;
+                        }
+                        r += 1;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            result
+        }
+        pub fn add_space(s: String) -> String {
+            let mut result: String = s.chars().map(|v| format!("{} ", v)).collect();
+            result.remove(result.len() - 1);
+            result
+        }
+    }
+    #[cfg(test)]
+    mod test {
+        use crate::leetcode::longest_palindrome::Solution;
+
+        #[test]
+        fn test1() {
+            assert_eq!(
+                Solution::longest_palindrome("baaabaaa".to_string()),
+                "aaabaaa".to_string()
+            );
+            assert_eq!(
+                Solution::longest_palindrome("babad".to_string()),
+                "bab".to_string()
+            );
+            assert_eq!(
+                Solution::longest_palindrome("cbbd".to_string()),
+                "bb".to_string()
+            );
+            assert_eq!(
+                Solution::longest_palindrome("a".to_string()),
+                "a".to_string()
+            );
+            //assert_eq!(Solution::longest_palindrome("abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababa".to_string()),"bb".to_string());
+        }
+    }
+}
