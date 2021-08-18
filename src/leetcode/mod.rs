@@ -178,3 +178,33 @@ pub mod length_of_longest_substring {
         }
     }
 }
+pub mod find_median_sorted_arrays {
+    //给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
+    //请你找出并返回这两个正序数组的 中位数 。
+    pub struct Solution;
+    impl Solution {
+        pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
+            let mut nums3 = nums1;
+            let mut tmp = nums2;
+            nums3.append(&mut tmp);
+            nums3.sort();
+            if nums3.len() % 2 == 1 {
+                return nums3[nums3.len() / 2] as f64;
+            } else {
+                return (nums3[nums3.len() / 2] + nums3[nums3.len() / 2 - 1]) as f64 / 2.0;
+            }
+        }
+    }
+    #[cfg(test)]
+    mod test {
+        use crate::leetcode::find_median_sorted_arrays::Solution;
+
+        #[test]
+        fn test1() {
+            assert_eq!(
+                Solution::find_median_sorted_arrays(vec![1, 2], vec![3, 4]),
+                2.5
+            );
+        }
+    }
+}
