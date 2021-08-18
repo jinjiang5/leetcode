@@ -92,7 +92,7 @@ pub mod add_two_numbers {
         if num != 0 {
             return Some(Box::new(ListNode {
                 val: (num % 10) as i32,
-                next: num_to_listnode(num/10),
+                next: num_to_listnode(num / 10),
             }));
         } else {
             return None;
@@ -105,10 +105,76 @@ pub mod add_two_numbers {
         use super::Solution;
         #[test]
         fn it_works() {
-            assert_eq!(Solution::add_two_numbers(num_to_listnode(10), num_to_listnode(20)), num_to_listnode(30));
-            assert_eq!(Solution::add_two_numbers(num_to_listnode(999999), num_to_listnode(999)), num_to_listnode(1000998));
-            assert_eq!(Solution::add_two_numbers(num_to_listnode(0), num_to_listnode(0)), num_to_listnode(0));
-            assert_eq!(Solution::add_two_numbers(num_to_listnode(20), num_to_listnode(0)), num_to_listnode(20));
+            assert_eq!(
+                Solution::add_two_numbers(num_to_listnode(10), num_to_listnode(20)),
+                num_to_listnode(30)
+            );
+            assert_eq!(
+                Solution::add_two_numbers(num_to_listnode(999999), num_to_listnode(999)),
+                num_to_listnode(1000998)
+            );
+            assert_eq!(
+                Solution::add_two_numbers(num_to_listnode(0), num_to_listnode(0)),
+                num_to_listnode(0)
+            );
+            assert_eq!(
+                Solution::add_two_numbers(num_to_listnode(20), num_to_listnode(0)),
+                num_to_listnode(20)
+            );
+        }
+    }
+}
+pub mod length_of_longest_substring {
+    use std::collections::HashMap;
+
+    //给定一个字符串s，请你找出其中不含有重复字符的最长子串的长度。
+    pub struct Solution;
+    impl Solution {
+        pub fn length_of_longest_substring(s: String) -> i32 {
+            let mut result = 0;
+            let sc: Vec<char> = s.chars().collect();
+            let mut map: HashMap<char, usize> = HashMap::new();
+            let (mut i, mut j) = (0usize, 0usize);
+            while j < sc.len() {
+                if map.contains_key(&sc[j]) {
+                    if let Some(v) = map.get(&sc[j]) {
+                        if v < &i {
+                            map.insert(sc[j], j);
+                        } else {
+                            i = v.clone() + 1;
+                            map.insert(sc[j], j);
+                        }
+                    }
+                    result = result.max(j as i32 - i as i32 + 1);
+                    j += 1;
+                } else {
+                    map.insert(sc[j], j);
+                    result = result.max(j as i32 - i as i32 + 1);
+                    j += 1;
+                }
+            }
+            result
+        }
+    }
+    #[cfg(test)]
+    mod test {
+        use crate::leetcode::length_of_longest_substring::Solution;
+
+        #[test]
+        fn test1() {
+            assert_eq!(
+                Solution::length_of_longest_substring("tmmzuxt".to_string()),
+                5
+            );
+            assert_eq!(
+                Solution::length_of_longest_substring("abcabcbb".to_string()),
+                3
+            );
+            assert_eq!(Solution::length_of_longest_substring("".to_string()), 0);
+            assert_eq!(
+                Solution::length_of_longest_substring("bbbbbb".to_string()),
+                1
+            );
         }
     }
 }
