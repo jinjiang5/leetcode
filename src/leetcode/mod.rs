@@ -108,7 +108,7 @@ pub mod add_two_numbers {
             assert_eq!(Solution::add_two_numbers(num_to_listnode(10), num_to_listnode(20)), num_to_listnode(30));
             assert_eq!(Solution::add_two_numbers(num_to_listnode(999999), num_to_listnode(999)), num_to_listnode(1000998));
             assert_eq!(Solution::add_two_numbers(num_to_listnode(0), num_to_listnode(0)), num_to_listnode(0));
-            
+            assert_eq!(Solution::add_two_numbers(num_to_listnode(20), num_to_listnode(0)), num_to_listnode(0));
         }
     }
 }
